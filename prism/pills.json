@@ -1,0 +1,19 @@
+{
+  "version": "1",
+  "builtin": [
+    "titan",
+    "sage",
+    "warden",
+    "phantom",
+    "void"
+  ],
+  "custom": {
+    "cobalt": {
+      "name": "cobalt",
+      "emoji": "🟦",
+      "color": "blue",
+      "focus": "Resilience. Recovery. Graceful degradation.",
+      "created": "2026-06-18"
+    }
+  }
+}

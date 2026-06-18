@@ -1,0 +1,10 @@
+{
+  "name": "prism",
+  "version": "0.1.0",
+  "description": "5 colored pills for AI agents. Pop a pill, gain a power.",
+  "root": "..",
+  "hooks": {
+    "hooks.json": "hooks/hooks.json"
+  },
+  "skills": ["skills/prism", "skills/prism-review", "skills/prism-audit", "skills/prism-debt", "skills/prism-help"]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Prism",
+  "description": "5 colored pills for AI agents. Pop a pill, gain a power.",
+  "version": "0.1.0",
+  "commands": {
+    "prism": {
+      "description": "Pop a Prism pill (titan|sage|warden|phantom|void|custom)",
+      "args": ["<pill>"]
+    },
+    "prism-review": {
+      "description": "Review diff for over-engineering"
+    },
+    "prism-audit": {
+      "description": "Audit repo for over-engineering"
+    },
+    "prism-debt": {
+      "description": "List prism: shortcuts"
+    },
+    "prism-create": {
+      "description": "Create a custom Prism pill"
+    },
+    "prism-manage": {
+      "description": "Manage custom pills — edit, delete, disable, enable"
+    },
+    "prism-help": {
+      "description": "Show help"
+    }
+  }
+}
