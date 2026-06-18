@@ -1,7 +1,7 @@
 {
-  "name": "prism-extension",
+  "name": "dose-extension",
   "version": "0.1.0",
-  "description": "Prism plugin for Pi agent harness",
+  "description": "Dose plugin for Pi agent harness",
   "private": true,
   "type": "module",
   "scripts": {

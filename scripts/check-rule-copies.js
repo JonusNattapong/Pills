@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Check that all platform rule files reference the correct "prism:" prefix
+// Check that all platform rule files reference the correct "dose:" prefix
 // and don't contain stale "ponytail:" references.
 
 const fs = require("fs");
@@ -9,12 +9,12 @@ const ROOT = path.join(__dirname, "..");
 
 const RULE_FILES = [
   "AGENTS.md",
-  ".cursor/rules/prism.mdc",
-  ".windsurf/rules/prism.md",
-  ".clinerules/prism.md",
+  ".cursor/rules/dose.mdc",
+  ".windsurf/rules/dose.md",
+  ".clinerules/dose.md",
   ".github/copilot-instructions.md",
-  ".kiro/steering/prism.md",
-  "skills/prism/SKILL.md",
+  ".kiro/steering/dose.md",
+  "skills/dose/SKILL.md",
 ];
 
 let exitCode = 0;
@@ -40,9 +40,9 @@ for (const file of RULE_FILES) {
     }
   }
 
-  // Check for prism: prefix presence
-  if (!/prism[: ]/i.test(content) && !/\bprism\b/i.test(content)) {
-    console.error(`WARNING: ${file} may not contain Prism rules`);
+  // Check for dose: prefix presence
+  if (!/dose[: ]/i.test(content)) {
+    console.error(`WARNING: ${file} may not contain Dose rules`);
   }
 }
 

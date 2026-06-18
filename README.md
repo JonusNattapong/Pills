@@ -1,11 +1,11 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.png">
-    <img src="assets/logo.png" width="220" alt="Prism">
+    <img src="assets/logo.png" width="220" alt="Dose">
   </picture>
 </p>
 
-<h1 align="center">Prism</h1>
+<h1 align="center">Dose</h1>
 
 <p align="center">
   <em>Pop a pill. Gain a power. Switch anytime.</em>
@@ -102,35 +102,35 @@ In any conversation with your AI agent:
 
 | You say | Effect |
 |---------|--------|
-| `pop red` or `/prism titan` | Titan mode — performance first |
-| `pop blue` or `/prism sage` | Sage mode — architecture first |
-| `pop green` or `/prism warden` | Warden mode — security first |
-| `pop yellow` or `/prism phantom` | Phantom mode — minimal first (default) |
-| `pop purple` or `/prism void` | Void mode — full spectrum |
+| `pop red` or `/dose titan` | Titan mode — performance first |
+| `pop blue` or `/dose sage` | Sage mode — architecture first |
+| `pop green` or `/dose warden` | Warden mode — security first |
+| `pop yellow` or `/dose phantom` | Phantom mode — minimal first (default) |
+| `pop purple` or `/dose void` | Void mode — full spectrum |
 
 ### Commands
 
 | Command | What it does |
 |---------|--------------|
-| `/prism [pill]` | Pop a pill (titan/sage/warden/phantom/void) |
-| `/prism-status` | Show which pill is active |
-| `/prism-review` | Review the current diff for unnecessary complexity |
-| `/prism-audit` | Audit the whole repo for bloat |
-| `/prism-debt` | Harvest `prism:` shortcuts into a debt ledger |
-| `/prism-help` | Quick-reference card |
-| `/prism-create` | Create a custom pill — tell the AI what you want |
-| `/prism-manage` | Edit, delete, disable, enable custom pills |
+| `/dose [pill]` | Pop a pill (titan/sage/warden/phantom/void) |
+| `/dose-status` | Show which pill is active |
+| `/dose-review` | Review the current diff for unnecessary complexity |
+| `/dose-audit` | Audit the whole repo for bloat |
+| `/dose-debt` | Harvest `dose:` shortcuts into a debt ledger |
+| `/dose-help` | Quick-reference card |
+| `/dose-create` | Create a custom pill — tell the AI what you want |
+| `/dose-manage` | Edit, delete, disable, enable custom pills |
 
 ### Custom pills
 
-Want a pill that Prism doesn't have? Just ask:
+Want a pill that Dose doesn't have? Just ask:
 
 > "create a pill called **onyx** that focuses on **deep focus** — no distractions, single-task, block out everything else"
 
-The `/prism-create` skill will:
+The `/dose-create` skill will:
 1. Ask for the pill's color, emoji, ladder, and rules
 2. Generate the skill file, register it in `pills.json`, and update `AGENTS.md`
-3. Make it immediately available via `/prism <name>`
+3. Make it immediately available via `/dose <name>`
 
 You can also create pills from the command line:
 
@@ -159,11 +159,11 @@ node scripts/manage-pill.js enable --name storm
 node scripts/manage-pill.js delete --name storm --yes
 ```
 
-Or just tell the AI: `/prism-manage` and describe what you want.
+Or just tell the AI: `/dose-manage` and describe what you want.
 
 ### Deactivate
 
-Say "normal mode" or `/prism off`.
+Say "normal mode" or `/dose off`.
 
 ### Configure default pill
 
@@ -171,7 +171,7 @@ Say "normal mode" or `/prism off`.
 export PRISM_DEFAULT_MODE=sage
 ```
 
-Or in `~/.config/prism/config.json` (`%APPDATA%\prism\config.json` on Windows):
+Or in `~/.config/dose/config.json` (`%APPDATA%\dose\config.json` on Windows):
 
 ```json
 { "defaultMode": "titan" }
@@ -184,24 +184,24 @@ Default is `phantom`.
 ### Claude Code
 
 ```
-/plugin marketplace add <vendor>/prism
-/plugin install prism@prism
+/plugin marketplace add <vendor>/dose
+/plugin install dose@dose
 ```
 
 ### Codex
 
 ```bash
-codex plugin marketplace add <vendor>/prism
+codex plugin marketplace add <vendor>/dose
 codex
 ```
 
-Open `/plugins`, select Prism, install. Then open `/hooks`, review and trust
+Open `/plugins`, select Dose, install. Then open `/hooks`, review and trust
 its lifecycle hooks.
 
 ### Pi agent harness
 
 ```
-pi install git:github.com/<your>/prism
+pi install git:github.com/<your>/dose
 ```
 
 ### OpenCode
@@ -209,15 +209,15 @@ pi install git:github.com/<your>/prism
 Add to `opencode.json`:
 
 ```json
-{ "plugin": ["./.opencode/plugins/prism.mjs"] }
+{ "plugin": ["./.opencode/plugins/dose.mjs"] }
 ```
 
 ### Cursor / Windsurf / Cline
 
 Copy the matching rules file from this repo:
-- `.cursor/rules/prism.mdc` → your `.cursor/rules/`
-- `.windsurf/rules/prism.md` → your `.windsurf/rules/`
-- `.clinerules/prism.md` → your `.clinerules/`
+- `.cursor/rules/dose.mdc` → your `.cursor/rules/`
+- `.windsurf/rules/dose.md` → your `.windsurf/rules/`
+- `.clinerules/dose.md` → your `.clinerules/`
 
 ### GitHub Copilot
 
@@ -227,9 +227,9 @@ Copy `AGENTS.md` and `.github/copilot-instructions.md` to your project root.
 
 | Agent | File |
 |-------|------|
-| Kiro | `.kiro/steering/prism.md` |
+| Kiro | `.kiro/steering/dose.md` |
 | Gemini CLI | `gemini-extension.json` |
-| OpenClaw | `.openclaw/skills/prism/` |
+| OpenClaw | `.openclaw/skills/dose/` |
 
 ## Development
 
@@ -242,9 +242,9 @@ npm test
 When changing skill files, run `node scripts/build-openclaw-skills.js` to sync
 OpenClaw copies.
 
-## Why "Prism"?
+## Why "Dose"?
 
-A prism splits white light into five colors. Each color is a different power.
+A dose splits white light into five colors. Each color is a different power.
 Each pill is a different way of writing code. Same light, different
 wavelengths. Same developer, different modes.
 

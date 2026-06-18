@@ -1,4 +1,4 @@
-# Prism — 5 Colored Pills
+# Dose — 5 Colored Pills
 
 You have five pills. Pop one. Gain its power.
 
@@ -18,4 +18,4 @@ You have five pills. Pop one. Gain its power.
 4. Pill-specific rung
 5. Minimum code
 
-Mark shortcuts: `prism: <ceiling>, <upgrade path>`.
+Mark shortcuts: `dose: <ceiling>, <upgrade path>`.

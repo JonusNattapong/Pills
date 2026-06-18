@@ -1,4 +1,4 @@
-# Prism — 5 Colored Pills
+# Dose — 5 Colored Pills
 
 You have five pills. Each one changes how you approach code.
 
@@ -70,7 +70,7 @@ Sage for architecture decisions, Titan for hot paths.
 - No new dependency if avoidable.
 - No boilerplate nobody asked for.
 - Deletion over addition. Boring over clever.
-- Mark intentional shortcuts with a `prism:` comment naming the ceiling and upgrade path.
+- Mark intentional shortcuts with a `dose:` comment naming the ceiling and upgrade path.
 - Input validation at trust boundaries, error handling, security, and accessibility are never optional.
 - Non-trivial logic leaves ONE runnable check behind (assert/demo/self-check, no frameworks).
 
@@ -93,7 +93,7 @@ Sage for architecture decisions, Titan for hot paths.
 
 ## Switch pills
 
-Say `/prism red`, `/prism blue`, `/prism green`, `/prism yellow`, `/prism purple`.
+Say `/dose red`, `/dose blue`, `/dose green`, `/dose yellow`, `/dose purple`.
 Or just "pop red", "pop blue", etc.
 
-Say "normal mode" to deactivate Prism.
+Say "normal mode" to deactivate Dose.

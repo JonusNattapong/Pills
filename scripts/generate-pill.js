@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Generate a custom Prism pill: skill file, registry entry, AGENTS.md update.
+// Generate a custom Dose pill: skill file, registry entry, AGENTS.md update.
 //
 // Usage:
 //   node scripts/generate-pill.js --name cobalt --emoji 🟠 --color orange --focus "Resilience. Recovery. Graceful degradation."
@@ -56,7 +56,7 @@ if (!/^[a-z][a-z0-9-]*$/.test(name)) {
 }
 
 const Name = name.charAt(0).toUpperCase() + name.slice(1);
-const skillDir = path.join(SKILLS_DIR, `prism-${name}`);
+const skillDir = path.join(SKILLS_DIR, `dose-${name}`);
 const skillFile = path.join(skillDir, "SKILL.md");
 
 // Check for existing
@@ -82,14 +82,14 @@ const rulesLines = args.rules
   ? String(args.rules).split("|").map((s) => `- ${s.trim()}`)
   : [
       `- Follow the ${name} philosophy: ${focus}`,
-      `- Mark shortcuts with \`prism: ${name} — <ceiling>, <upgrade path>\`.`,
+      `- Mark shortcuts with \`dose: ${name} — <ceiling>, <upgrade path>\`.`,
     ];
 
 // ── Create skill file ───────────────────────────────────────────────────────
 const skillContent = `---
-name: prism-${name}
+name: dose-${name}
 description: >
-  Custom Prism pill: ${Name}. ${focus}
+  Custom Dose pill: ${Name}. ${focus}
 ---
 
 # ${emoji} ${Name} — ${focus}
@@ -113,7 +113,7 @@ are never simplified away. Non-trivial logic leaves one runnable check.
 
 fs.mkdirSync(skillDir, { recursive: true });
 fs.writeFileSync(skillFile, skillContent);
-console.log(`✅ Created: skills/prism-${name}/SKILL.md`);
+console.log(`✅ Created: skills/dose-${name}/SKILL.md`);
 
 // ── Register in pills.json ──────────────────────────────────────────────────
 let registry = { version: "1", builtin: BUILTIN, custom: {} };
@@ -162,6 +162,6 @@ if (fs.existsSync(AGENTS_MD)) {
 
 // ── Done ────────────────────────────────────────────────────────────────────
 console.log(`\n✨ Pill "${name}" (${emoji} ${Name}) created!`);
-console.log(`   Pop it:  /prism ${name}  or  pop ${name}`);
-console.log(`   Skill:   skills/prism-${name}/SKILL.md`);
+console.log(`   Pop it:  /dose ${name}  or  pop ${name}`);
+console.log(`   Skill:   skills/dose-${name}/SKILL.md`);
 console.log(`   Config:  pills.json`);

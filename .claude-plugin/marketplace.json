@@ -1,6 +1,6 @@
 {
-  "vendor": "prism",
-  "name": "Prism",
+  "vendor": "dose",
+  "name": "Dose",
   "description": "5 colored pills for AI agents. Pop a pill, gain a power.",
   "version": "0.1.0"
 }

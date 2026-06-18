@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, "..");
 const SKILLS_DIR = path.join(ROOT, "skills");
 const OPENCLAW_DIR = path.join(ROOT, ".openclaw", "skills");
 
-const SKILL_NAMES = ["prism", "prism-review", "prism-audit", "prism-debt", "prism-help"];
+const SKILL_NAMES = ["dose", "dose-review", "dose-audit", "dose-debt", "dose-create", "dose-manage", "dose-help"];
 
 for (const name of SKILL_NAMES) {
   const src = path.join(SKILLS_DIR, name, "SKILL.md");

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Prism Pill Manager — create, edit, delete, disable, enable, list.
+// Dose Pill Manager — create, edit, delete, disable, enable, list.
 //
 // Usage:
 //   node scripts/manage-pill.js create --name cobalt --emoji 🔵 --color blue --focus "Resilience"
@@ -114,7 +114,7 @@ function cmdEdit(args) {
   }
 
   // Update skill file description and title
-  const skillFile = path.join(SKILLS_DIR, `prism-${args.name}`, "SKILL.md");
+  const skillFile = path.join(SKILLS_DIR, `dose-${args.name}`, "SKILL.md");
   if (fs.existsSync(skillFile)) {
     let content = fs.readFileSync(skillFile, "utf8");
     const Name = args.name.charAt(0).toUpperCase() + args.name.slice(1);
@@ -122,7 +122,7 @@ function cmdEdit(args) {
     // Update description in frontmatter (between --- markers)
     content = content.replace(
       /description: >[\s\S]*?^(?=---)/m,
-      `description: >\n  Custom Prism pill: ${Name}. ${pill.focus}\n`
+      `description: >\n  Custom Dose pill: ${Name}. ${pill.focus}\n`
     );
     // Update title line (first # heading)
     content = content.replace(
@@ -130,7 +130,7 @@ function cmdEdit(args) {
       `# ${pill.emoji} ${Name} — ${pill.focus}`
     );
     fs.writeFileSync(skillFile, content);
-    console.log(`  Updated: skills/prism-${args.name}/SKILL.md`);
+    console.log(`  Updated: skills/dose-${args.name}/SKILL.md`);
   }
 
   writeRegistry(registry);
@@ -143,10 +143,10 @@ function cmdDelete(args) {
   const Name = args.name.charAt(0).toUpperCase() + args.name.slice(1);
 
   // Remove skill folder
-  const skillDir = path.join(SKILLS_DIR, `prism-${args.name}`);
+  const skillDir = path.join(SKILLS_DIR, `dose-${args.name}`);
   if (fs.existsSync(skillDir)) {
     fs.rmSync(skillDir, { recursive: true, force: true });
-    console.log(`  Deleted: skills/prism-${args.name}/`);
+    console.log(`  Deleted: skills/dose-${args.name}/`);
   }
 
   // Remove from registry
@@ -259,7 +259,7 @@ switch (cmd) {
     if (!args.name) { console.error("--name required"); process.exit(1); }
     if (!args.yes) {
       console.log(`WARNING: This will permanently delete "${args.name}".`);
-      console.log(`Files: skills/prism-${args.name}/`);
+      console.log(`Files: skills/dose-${args.name}/`);
       console.log(`Run with --yes to confirm.`);
       process.exit(0);
     }

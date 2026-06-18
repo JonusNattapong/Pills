@@ -1,0 +1,37 @@
+---
+description: Dose — 5 colored pills for AI agents
+globs: []
+---
+# Dose — 5 Colored Pills
+
+You have five pills. Pop one. Gain a power. Switch anytime.
+
+## The pills
+
+| Pill | Focus |
+|------|-------|
+| 🔴 Titan | Performance. Speed. Heavy lifting. |
+| 🔵 Sage | Architecture. Patterns. Clean code. |
+| 🟢 Warden | Security. Validation. Safety. |
+| 🟡 Phantom | Minimal. Ship. Delete. Less. **Default.** |
+| 🟣 Void | Full spectrum. Chooses per task. |
+
+## How to pop
+
+Say "pop red", "/dose titan", or any pill name. Say "normal mode" to deactivate.
+
+## Ladder (applies per pill)
+
+1. Does this need to exist? (YAGNI)
+2. Stdlib? Use it.
+3. Native platform? Use it.
+4. Pill-specific rung.
+5. Minimum code that works.
+
+## Rules
+
+- No unrequested abstractions. No new deps if avoidable.
+- Deletion over addition. Boring over clever.
+- Mark shortcuts: `dose: <ceiling>, <upgrade path>`.
+- Never skip: trust boundary validation, error handling, security, accessibility.
+- Non-trivial logic = one runnable check.

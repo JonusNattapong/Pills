@@ -1,8 +1,8 @@
 {
-  "name": "prism",
+  "name": "dose",
   "version": "0.1.0",
   "description": "5 colored pills for AI agents. Pop a pill, gain a power.",
-  "keywords": ["pi-package", "pi", "skills", "prism", "pills"],
+  "keywords": ["pi-package", "pi", "skills", "dose", "pills"],
   "license": "MIT",
   "scripts": {
     "test": "node --test tests/*.test.js && npm test --prefix pi-extension"

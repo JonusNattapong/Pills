@@ -13,8 +13,8 @@ const {
   writeDefaultMode,
   getCustomModes,
   invalidateCustomModesCache,
-} = require("../hooks/prism-config.js");
-const { getPrismInstructions, filterSkillBodyForMode } = require("../hooks/prism-instructions.js");
+} = require("../hooks/dose-config.js");
+const { getDoseInstructions, filterSkillBodyForMode } = require("../hooks/dose-instructions.js");
 
 export { filterSkillBodyForMode };
 export const readDefaultMode = getDefaultMode;
@@ -53,7 +53,7 @@ export function resolveSessionMode(entries, fallbackMode = DEFAULT_MODE) {
 
   for (let i = entries.length - 1; i >= 0; i -= 1) {
     const entry = entries[i];
-    if (entry?.type !== "custom" || entry?.customType !== "prism-mode") continue;
+    if (entry?.type !== "custom" || entry?.customType !== "dose-mode") continue;
 
     const mode = normalizePersistedMode(entry?.data?.mode);
     if (mode) return mode;
@@ -62,7 +62,7 @@ export function resolveSessionMode(entries, fallbackMode = DEFAULT_MODE) {
   return fallback;
 }
 
-export function parsePrismCommand(text, defaultMode = DEFAULT_MODE) {
+export function parseDoseCommand(text, defaultMode = DEFAULT_MODE) {
   const fallback = normalizePersistedMode(defaultMode) || DEFAULT_MODE;
   const normalizedText = String(text || "").trim().toLowerCase();
 
@@ -100,7 +100,7 @@ export function parsePrismCommand(text, defaultMode = DEFAULT_MODE) {
 
 export { writeDefaultMode };
 
-export default function prismExtension(pi) {
+export default function doseExtension(pi) {
   let currentMode = DEFAULT_MODE;
   let configuredDefaultMode = getDefaultMode();
   let pillSymbols = getPillSymbols();
@@ -112,9 +112,9 @@ export default function prismExtension(pi) {
     if (!normalized) return;
 
     currentMode = normalized;
-    pi.appendEntry("prism-mode", { mode: normalized });
+    pi.appendEntry("dose-mode", { mode: normalized });
     const symbol = pillSymbols[normalized] || "";
-    ctx?.ui?.notify?.(`${symbol} Prism: ${normalized} pill popped.`, "info");
+    ctx?.ui?.notify?.(`${symbol} Dose: ${normalized} pill popped.`, "info");
   };
 
   const sendAlias = (skillName, args, ctx) => {
@@ -130,14 +130,14 @@ export default function prismExtension(pi) {
     pi.sendUserMessage(message);
   };
 
-  pi.registerCommand("prism", {
-    description: "Pop a Prism pill (titan|sage|warden|phantom|void|custom) or get status",
+  pi.registerCommand("dose", {
+    description: "Pop a Dose pill (titan|sage|warden|phantom|void|custom) or get status",
     handler: async (args, ctx) => {
-      const parsed = parsePrismCommand(args, configuredDefaultMode);
+      const parsed = parseDoseCommand(args, configuredDefaultMode);
 
       if (parsed.type === "status") {
         const symbol = pillSymbols[currentMode] || "";
-        ctx?.ui?.notify?.(`${symbol} Prism: ${currentMode} pill active • default ${configuredDefaultMode}`, "info");
+        ctx?.ui?.notify?.(`${symbol} Dose: ${currentMode} pill active • default ${configuredDefaultMode}`, "info");
         return;
       }
 
@@ -146,7 +146,7 @@ export default function prismExtension(pi) {
         if (written) {
           configuredDefaultMode = getDefaultMode();
           const message = configuredDefaultMode === written
-            ? `Default Prism pill set to ${written}.`
+            ? `Default Dose pill set to ${written}.`
             : `Saved default ${written}, but env override keeps default at ${configuredDefaultMode}.`;
           ctx?.ui?.notify?.(message, "info");
         }
@@ -162,34 +162,34 @@ export default function prismExtension(pi) {
     },
   });
 
-  pi.registerCommand("prism-review", {
-    description: "Run /skill:prism-review",
-    handler: (_args, ctx) => sendAlias("/skill:prism-review", "", ctx),
+  pi.registerCommand("dose-review", {
+    description: "Run /skill:dose-review",
+    handler: (_args, ctx) => sendAlias("/skill:dose-review", "", ctx),
   });
 
-  pi.registerCommand("prism-audit", {
-    description: "Run /skill:prism-audit",
-    handler: (_args, ctx) => sendAlias("/skill:prism-audit", "", ctx),
+  pi.registerCommand("dose-audit", {
+    description: "Run /skill:dose-audit",
+    handler: (_args, ctx) => sendAlias("/skill:dose-audit", "", ctx),
   });
 
-  pi.registerCommand("prism-debt", {
-    description: "Run /skill:prism-debt",
-    handler: (_args, ctx) => sendAlias("/skill:prism-debt", "", ctx),
+  pi.registerCommand("dose-debt", {
+    description: "Run /skill:dose-debt",
+    handler: (_args, ctx) => sendAlias("/skill:dose-debt", "", ctx),
   });
 
-  pi.registerCommand("prism-help", {
-    description: "Run /skill:prism-help",
-    handler: (_args, ctx) => sendAlias("/skill:prism-help", "", ctx),
+  pi.registerCommand("dose-help", {
+    description: "Run /skill:dose-help",
+    handler: (_args, ctx) => sendAlias("/skill:dose-help", "", ctx),
   });
 
-  pi.registerCommand("prism-create", {
-    description: "Create a custom Prism pill",
-    handler: (_args, ctx) => sendAlias("/skill:prism-create", _args, ctx),
+  pi.registerCommand("dose-create", {
+    description: "Create a custom Dose pill",
+    handler: (_args, ctx) => sendAlias("/skill:dose-create", _args, ctx),
   });
 
-  pi.registerCommand("prism-manage", {
+  pi.registerCommand("dose-manage", {
     description: "Manage custom pills — edit, delete, disable, enable, list",
-    handler: (_args, ctx) => sendAlias("/skill:prism-manage", _args, ctx),
+    handler: (_args, ctx) => sendAlias("/skill:dose-manage", _args, ctx),
   });
 
   pi.on("input", async (event) => {
@@ -198,15 +198,15 @@ export default function prismExtension(pi) {
 
     const text = String(event?.text || "");
 
-    // "normal mode" / "stop prism"
-    if (currentMode !== "off" && /\b(normal mode|stop prism)\b/i.test(text)) {
+    // "normal mode" / "stop dose"
+    if (currentMode !== "off" && /\b(normal mode|stop dose)\b/i.test(text)) {
       setMode("off");
     }
 
-    // Detect "/prism <name>" where name is any valid pill (including custom)
-    const prismCmd = text.match(/^\/prism\s+(\S+)/i);
-    if (prismCmd) {
-      const pill = prismCmd[1].toLowerCase();
+    // Detect "/dose <name>" where name is any valid pill (including custom)
+    const doseCmd = text.match(/^\/dose\s+(\S+)/i);
+    if (doseCmd) {
+      const pill = doseCmd[1].toLowerCase();
       if (pill === "off") { setMode("off", event); return; }
       const normalized = normalizeMode(pill) || COLOR_MAP[pill];
       if (normalized) { setMode(normalized, event); return; }
@@ -231,6 +231,6 @@ export default function prismExtension(pi) {
 
   pi.on("before_agent_start", async (event) => {
     if (!currentMode || currentMode === "off") return;
-    return { systemPrompt: `${event.systemPrompt}\n\n${getPrismInstructions(currentMode)}` };
+    return { systemPrompt: `${event.systemPrompt}\n\n${getDoseInstructions(currentMode)}` };
   });
 }
