@@ -17,7 +17,7 @@ const CONFIG_DIR = process.platform === "win32"
 
 function getProjectRoot() {
   // Walk up from __dirname to find package.json with name "prism"
-  let dir = path.dirname(__dirname); // hooks/ -> prism/
+  let dir = path.dirname(__dirname); // hooks/ -> root
   return dir;
 }
 

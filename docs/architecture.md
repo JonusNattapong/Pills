@@ -8,14 +8,15 @@ each pill changes the agent's behavior and approach to coding tasks.
 ## Structure
 
 ```
-prism/
 ├── package.json           # Pi agent package config
 ├── AGENTS.md              # Main ruleset (many agents read this automatically)
 ├── skills/                # Skill definitions (SKILL.md files)
-│   └── prism/             # Core skill: 5 pill classes with ladders, rules
-│   └── prism-review/      # Over-engineering review skill
-│   └── prism-audit/       # Repo-wide bloat audit skill
-│   └── prism-debt/        # Shortcut/debt ledger skill
+│   ├── prism/             # Core skill: 5 pill classes with ladders, rules
+│   ├── prism-review/      # Over-engineering review skill
+│   ├── prism-audit/       # Repo-wide bloat audit skill
+│   ├── prism-debt/        # Shortcut/debt ledger skill
+│   ├── prism-create/      # Custom pill creation skill
+│   ├── prism-manage/      # Pill management skill
 │   └── prism-help/        # Reference card skill
 ├── hooks/                 # Lifecycle hooks for Claude Code / Codex
 │   ├── hooks.json         # Hook registration
@@ -28,6 +29,8 @@ prism/
 ├── pi-extension/          # Pi agent harness plugin
 │   ├── index.js           # Command registration, mode switching
 │   └── test/              # Plugin tests
+├── scripts/               # CLI scripts (generate, manage, check)
+├── pills.json             # Custom pills registry
 ├── .cursor/rules/         # Cursor rules
 ├── .windsurf/rules/       # Windsurf rules
 ├── .clinerules/           # Cline rules
