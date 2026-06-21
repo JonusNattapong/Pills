@@ -12,19 +12,20 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/5%20pills-titan%20%E2%80%A2%20sage%20%E2%80%A2%20warden%20%E2%80%A2%20phantom%20%E2%80%A2%20void-111111?style=flat-square" alt="5 pills">
+  <img src="https://img.shields.io/badge/7%20pills-titan%20%E2%80%A2%20sage%20%E2%80%A2%20warden%20%E2%80%A2%20phantom%20%E2%80%A2%20void%20%E2%80%A2%20ponytail%20%E2%80%A2%20karpathy-111111?style=flat-square" alt="7 pills">
   <img src="https://img.shields.io/badge/license-MIT-111111?style=flat-square" alt="MIT license">
 </p>
 
 ---
 
-Five colored pills. Each one changes how your AI agent approaches code.
+Seven colored pills. Each one changes how your AI agent approaches code.
 
 Pop a red pill for raw performance. Pop blue for clean architecture. Green for
-bulletproof security. Yellow to ship fast with less code. Purple for everything
-at once.
+bulletproof security. Yellow to ship fast. Purple for everything at once.
+Gray (ponytail) for lazy senior dev wisdom. 🧠 Karpathy for thoughtful,
+surgical, goal-driven execution.
 
-Switch between them anytime. The effect is instant.
+Pop multiple pills at once — their rules combine. The effect is instant.
 
 ## The pills
 
@@ -35,6 +36,8 @@ Switch between them anytime. The effect is instant.
 | 🟢 | **Warden** | Green | Security | A guardian. Validates every input, handles every error, never silent-fails. |
 | 🟡 | **Phantom** | Yellow | Minimal | A shipper. Deletes before adding. One line over fifty. **Default pill.** |
 | 🟣 | **Void** | Purple | Full spectrum | A strategist. Chooses the right pill for each part of the task automatically. |
+| 🦥 | **Ponytail** | Gray | Lazy senior dev | Deletes before writing. One line > fifty. The original senior dev. |
+| 🧠 | **Karpathy** | Purple | Think first | Systematic. Simplicity. Surgical changes. Goal-driven execution. |
 
 ## How it works
 
@@ -94,6 +97,19 @@ Intelligently selects the right pill per task:
 - Boilerplate/CRUD → Phantom
 ```
 
+## Multi-pill
+
+Pop **multiple pills at once** — their ladders and rules combine:
+
+```
+pop red             → add Titan
+pop blue            → add Sage (now Titan + Sage active)
+pop off red         → remove Titan (only Sage remains)
+normal mode         → deactivate all pills
+/dose off titan     → remove Titan via command
+/dose               → show active pills
+```
+
 ## Usage
 
 ### Pop a pill
@@ -102,18 +118,24 @@ In any conversation with your AI agent:
 
 | You say | Effect |
 |---------|--------|
-| `pop red` or `/dose titan` | Titan mode — performance first |
-| `pop blue` or `/dose sage` | Sage mode — architecture first |
-| `pop green` or `/dose warden` | Warden mode — security first |
-| `pop yellow` or `/dose phantom` | Phantom mode — minimal first (default) |
-| `pop purple` or `/dose void` | Void mode — full spectrum |
+| `pop red` or `/dose titan` | Add Titan pill |
+| `pop blue` or `/dose sage` | Add Sage pill |
+| `pop green` or `/dose warden` | Add Warden pill |
+| `pop yellow` or `/dose phantom` | Add Phantom pill |
+| `pop purple` or `/dose void` | Add Void pill |
+| `pop ponytail` or `/dose ponytail` | Add Ponytail pill |
+| `pop karpathy` or `/dose karpathy` | Add Karpathy pill |
+| `pop off red` or `/dose off titan` | Remove a specific pill |
+| `normal mode` or `/dose off` | Deactivate all pills |
 
 ### Commands
 
 | Command | What it does |
 |---------|--------------|
-| `/dose [pill]` | Pop a pill (titan/sage/warden/phantom/void) |
-| `/dose-status` | Show which pill is active |
+| `/dose [pill]` | Add a pill to active set |
+| `/dose off [pill]` | Remove a specific pill from active set |
+| `/dose off` | Deactivate all pills |
+| `/dose-status` | Show which pills are active |
 | `/dose-review` | Review the current diff for unnecessary complexity |
 | `/dose-audit` | Audit the whole repo for bloat |
 | `/dose-debt` | Harvest `dose:` shortcuts into a debt ledger |
@@ -121,9 +143,17 @@ In any conversation with your AI agent:
 | `/dose-create` | Create a custom pill — tell the AI what you want |
 | `/dose-manage` | Edit, delete, disable, enable custom pills |
 
-### Custom pills
+### Built-in custom pills
 
-Want a pill that Dose doesn't have? Just ask:
+Dose ships with these custom pills pre-installed:
+
+| 🦥 | **Ponytail** | Lazy senior dev. The original philosophy Dose was forked from. |
+| 🧠 | **Karpathy** | Andrej Karpathy's 4 principles: Think before coding, simplicity, surgical changes, goal-driven. |
+| 🔵 | **Cobalt** | Resilience. Recovery. Graceful degradation. |
+
+### Create your own
+
+Want a pill that Dose doesn't have? Just say:
 
 > "create a pill called **onyx** that focuses on **deep focus** — no distractions, single-task, block out everything else"
 

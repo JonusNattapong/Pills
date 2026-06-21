@@ -14,6 +14,20 @@
       "color": "blue",
       "focus": "Resilience. Recovery. Graceful degradation.",
       "created": "2026-06-18"
+    },
+    "ponytail": {
+      "name": "ponytail",
+      "emoji": "🦥",
+      "color": "gray",
+      "focus": "Lazy senior dev. Delete before you write.",
+      "created": "2026-06-21"
+    },
+    "karpathy": {
+      "name": "karpathy",
+      "emoji": "🧠",
+      "color": "purple",
+      "focus": "Think first. Simplicity. Surgical changes. Goal-driven execution.",
+      "created": "2026-06-21"
     }
   }
 }

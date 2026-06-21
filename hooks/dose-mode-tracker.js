@@ -1,33 +1,49 @@
 #!/usr/bin/env node
-// Dose mode tracker: persists mode between prompts.
-// Stores current mode in a temp file for statusline reading.
+// Dose mode tracker: persists modes between prompts.
+// Stores all active modes (comma-separated) in a temp file for statusline reading.
 const fs = require("fs");
 const path = require("path");
 const os = require("os");
-const { normalizeMode } = require("./dose-config");
 
 const TRACKER_FILE = path.join(os.tmpdir(), "dose-mode.txt");
 
-function readMode() {
+function readModes() {
   try {
     if (fs.existsSync(TRACKER_FILE)) {
-      return fs.readFileSync(TRACKER_FILE, "utf8").trim();
+      const raw = fs.readFileSync(TRACKER_FILE, "utf8").trim();
+      if (!raw) return [];
+      return raw.split(",").map(s => s.trim()).filter(Boolean);
     }
   } catch {}
-  return null;
+  return [];
+}
+
+function writeModes(modes) {
+  try {
+    if (!Array.isArray(modes) || modes.length === 0) {
+      fs.writeFileSync(TRACKER_FILE, "", "utf8");
+      return;
+    }
+    fs.writeFileSync(TRACKER_FILE, modes.join(","), "utf8");
+  } catch {}
+}
+
+// Backward compat: single mode read/write
+function readMode() {
+  const modes = readModes();
+  return modes.length > 0 ? modes[0] : null;
 }
 
 function writeMode(mode) {
-  try {
-    fs.writeFileSync(TRACKER_FILE, mode, "utf8");
-  } catch {}
+  const modes = mode ? [mode] : [];
+  writeModes(modes);
 }
 
-// If invoked with an argument, write it
+// If invoked with argument(s), write them
 const args = process.argv.slice(2);
 if (args.length > 0) {
-  const mode = normalizeMode(args[0]);
-  if (mode) writeMode(mode);
+  const modes = args.filter(Boolean).map(s => s.trim().toLowerCase());
+  writeModes(modes);
 }
 
-module.exports = { readMode, writeMode };
+module.exports = { readMode, readModes, writeMode, writeModes };

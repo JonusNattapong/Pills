@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Shared Dose instruction builder for Claude hooks and Pi extension.
+// Supports multi-pill: call getDoseInstructions for each active pill.
 
 const fs = require("fs");
 const path = require("path");
@@ -7,6 +8,7 @@ const { DEFAULT_MODE, normalizeMode, normalizePersistedMode } = require("./dose-
 
 const INDEPENDENT_MODES = new Set(["review"]);
 const SKILL_PATH = path.join(__dirname, "..", "skills", "dose", "SKILL.md");
+const SKILLS_DIR = path.join(__dirname, "..", "skills");
 
 function filterSkillBodyForMode(body, mode) {
   const effectiveMode = normalizeMode(mode) || DEFAULT_MODE;
@@ -30,6 +32,18 @@ function filterSkillBodyForMode(body, mode) {
       return true;
     })
     .join("\n");
+}
+
+function getCustomPillInstructions(mode) {
+  // Try skills/dose-<mode>/SKILL.md for custom pills
+  const customPath = path.join(SKILLS_DIR, `dose-${mode}`, "SKILL.md");
+  try {
+    if (fs.existsSync(customPath)) {
+      const content = fs.readFileSync(customPath, "utf8");
+      return content.replace(/^---[\s\S]*?---\s*/, "").trim();
+    }
+  } catch {}
+  return null;
 }
 
 function getFallbackInstructions(mode) {
@@ -66,9 +80,15 @@ function getDoseInstructions(mode) {
 
   const effectiveMode = normalizeMode(configuredMode) || DEFAULT_MODE;
 
+  // Try custom pill skill first (e.g. ponytail, karpathy, cobalt)
+  const customInstructions = getCustomPillInstructions(effectiveMode);
+  if (customInstructions) {
+    return customInstructions;
+  }
+
+  // Fall back to built-in filtering from core SKILL.md
   try {
-    return "DOSE ACTIVE — pill: " + effectiveMode + "\n\n" +
-      filterSkillBodyForMode(fs.readFileSync(SKILL_PATH, "utf8"), effectiveMode);
+    return filterSkillBodyForMode(fs.readFileSync(SKILL_PATH, "utf8"), effectiveMode);
   } catch (e) {
     return getFallbackInstructions(effectiveMode);
   }
@@ -78,4 +98,5 @@ module.exports = {
   filterSkillBodyForMode,
   getFallbackInstructions,
   getDoseInstructions,
+  getCustomPillInstructions,
 };

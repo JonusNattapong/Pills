@@ -1,30 +1,38 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { parseDoseCommand, resolveSessionMode } from "../index.js";
+import { parseDoseCommand, resolveSessionMode, resolveSessionModes } from "../index.js";
 
 describe("parseDoseCommand", () => {
-  it('parses "titan" as set-mode titan', () => {
-    assert.deepStrictEqual(parseDoseCommand("titan"), { type: "set-mode", mode: "titan" });
+  it('parses "titan" as add-mode titan', () => {
+    assert.deepStrictEqual(parseDoseCommand("titan"), { type: "add-mode", mode: "titan" });
   });
 
-  it('parses "sage" as set-mode sage', () => {
-    assert.deepStrictEqual(parseDoseCommand("sage"), { type: "set-mode", mode: "sage" });
+  it('parses "sage" as add-mode sage', () => {
+    assert.deepStrictEqual(parseDoseCommand("sage"), { type: "add-mode", mode: "sage" });
   });
 
-  it('parses "warden" as set-mode warden', () => {
-    assert.deepStrictEqual(parseDoseCommand("warden"), { type: "set-mode", mode: "warden" });
+  it('parses "warden" as add-mode warden', () => {
+    assert.deepStrictEqual(parseDoseCommand("warden"), { type: "add-mode", mode: "warden" });
   });
 
-  it('parses "phantom" as set-mode phantom', () => {
-    assert.deepStrictEqual(parseDoseCommand("phantom"), { type: "set-mode", mode: "phantom" });
+  it('parses "phantom" as add-mode phantom', () => {
+    assert.deepStrictEqual(parseDoseCommand("phantom"), { type: "add-mode", mode: "phantom" });
   });
 
-  it('parses "void" as set-mode void', () => {
-    assert.deepStrictEqual(parseDoseCommand("void"), { type: "set-mode", mode: "void" });
+  it('parses "void" as add-mode void', () => {
+    assert.deepStrictEqual(parseDoseCommand("void"), { type: "add-mode", mode: "void" });
   });
 
-  it('parses "off" as set-mode off', () => {
-    assert.deepStrictEqual(parseDoseCommand("off"), { type: "set-mode", mode: "off" });
+  it('parses "off" as clear-all', () => {
+    assert.deepStrictEqual(parseDoseCommand("off"), { type: "clear-all" });
+  });
+
+  it('parses "off titan" as remove-mode titan', () => {
+    assert.deepStrictEqual(parseDoseCommand("off titan"), { type: "remove-mode", mode: "titan" });
+  });
+
+  it('parses "off sage" as remove-mode sage', () => {
+    assert.deepStrictEqual(parseDoseCommand("off sage"), { type: "remove-mode", mode: "sage" });
   });
 
   it('parses empty string as "status"', () => {
@@ -43,6 +51,19 @@ describe("parseDoseCommand", () => {
   it('parses "default titan" as set-default', () => {
     assert.deepStrictEqual(parseDoseCommand("default titan"), { type: "set-default", mode: "titan" });
   });
+
+  it("parses color aliases", () => {
+    assert.deepStrictEqual(parseDoseCommand("red"), { type: "add-mode", mode: "titan" });
+    assert.deepStrictEqual(parseDoseCommand("blue"), { type: "add-mode", mode: "sage" });
+    assert.deepStrictEqual(parseDoseCommand("green"), { type: "add-mode", mode: "warden" });
+    assert.deepStrictEqual(parseDoseCommand("yellow"), { type: "add-mode", mode: "phantom" });
+    assert.deepStrictEqual(parseDoseCommand("purple"), { type: "add-mode", mode: "void" });
+  });
+
+  it("supports off with color aliases", () => {
+    assert.deepStrictEqual(parseDoseCommand("off red"), { type: "remove-mode", mode: "titan" });
+    assert.deepStrictEqual(parseDoseCommand("off blue"), { type: "remove-mode", mode: "sage" });
+  });
 });
 
 describe("resolveSessionMode", () => {
@@ -57,9 +78,44 @@ describe("resolveSessionMode", () => {
 
   it("picks last dose-mode entry", () => {
     const entries = [
-      { type: "custom", customType: "dose-mode", data: { mode: "sage" } },
-      { type: "custom", customType: "dose-mode", data: { mode: "void" } },
+      { type: "custom", customType: "dose-mode", data: { mode: "sage", action: "add" } },
+      { type: "custom", customType: "dose-mode", data: { mode: "void", action: "add" } },
     ];
     assert.strictEqual(resolveSessionMode(entries, "phantom"), "void");
+  });
+});
+
+describe("resolveSessionModes", () => {
+  it("returns empty set with no entries and no fallback", () => {
+    const modes = resolveSessionModes([]);
+    assert.strictEqual(modes.size, 0);
+  });
+
+  it("returns fallback modes when no entries", () => {
+    const modes = resolveSessionModes([], "phantom");
+    assert.ok(modes.has("phantom"));
+    assert.strictEqual(modes.size, 1);
+  });
+
+  it("collects all add-mode entries", () => {
+    const entries = [
+      { type: "custom", customType: "dose-mode", data: { mode: "sage", action: "add" } },
+      { type: "custom", customType: "dose-mode", data: { mode: "titan", action: "add" } },
+    ];
+    const modes = resolveSessionModes(entries);
+    assert.strictEqual(modes.size, 2);
+    assert.ok(modes.has("sage"));
+    assert.ok(modes.has("titan"));
+  });
+
+  it("honors remove-mode entries", () => {
+    const entries = [
+      { type: "custom", customType: "dose-mode", data: { mode: "sage", action: "add" } },
+      { type: "custom", customType: "dose-mode", data: { mode: "titan", action: "add" } },
+      { type: "custom", customType: "dose-mode", data: { mode: "sage", action: "remove" } },
+    ];
+    const modes = resolveSessionModes(entries);
+    assert.strictEqual(modes.size, 1);
+    assert.ok(modes.has("titan"));
   });
 });

@@ -7,7 +7,7 @@ description: >
 
 # Dose Help
 
-Pop a pill. Gain a power. Switch anytime.
+Pop pills. Stack them. Switch anytime.
 
 ## Pills
 
@@ -18,13 +18,30 @@ Pop a pill. Gain a power. Switch anytime.
 | 🟢 Green | **Warden** | `/dose green` | Security. Validation. Safety. |
 | 🟡 Yellow | **Phantom** | `/dose yellow` | Minimal. Ship. Delete. Less. **Default.** |
 | 🟣 Purple | **Void** | `/dose purple` | Full spectrum. Chooses per task. |
+| 🦥 Gray | **Ponytail** | `/dose ponytail` | Lazy senior dev. Delete before you write. |
+| 🧠 Purple | **Karpathy** | `/dose karpathy` | Think first. Simplicity. Surgical. Goal-driven. |
+
+## Multi-pill
+
+Pop multiple pills at once — their rules combine:
+
+```
+pop red             → add Titan
+pop blue            → add Sage (now Titan + Sage)
+pop off red         → remove Titan
+normal mode         → deactivate all
+/dose off titan     → remove Titan
+/dose               → show active pills
+```
 
 ## Commands
 
 | Command | What it does |
 |---------|--------------|
-| `/dose [color]` | Pop the pill. Sets your active mode. |
-| `/dose-status` | Show which pill is active. |
+| `/dose [pill]` | Add a pill to active set. |
+| `/dose off [pill]` | Remove a specific pill. |
+| `/dose off` | Deactivate all pills. |
+| `/dose-status` | Show which pills are active. |
 | `/dose-review` | Review diff for over-engineering. |
 | `/dose-audit` | Audit entire repo for bloat. |
 | `/dose-debt` | Harvest `dose:` shortcuts into a ledger. |
@@ -34,7 +51,7 @@ Pop a pill. Gain a power. Switch anytime.
 
 ## Deactivate
 
-Say "normal mode" or `/dose off`. Resume with `/dose [color]`.
+Say "normal mode" or `/dose off`. Resume by popping a pill.
 
 ## Configure
 
